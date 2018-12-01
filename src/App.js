@@ -1,28 +1,49 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Home, About, Login } from './components/fake';
+import Greeter from './components/greeter';
+
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+	constructor(props){
+		super(props);
+		this.state = { user: null };
+
+		this.login = this.login.bind(this);
+	}
+
+	login(user) {
+		this.setState({user: user});
+	}
+ 
+	render() {
+		return (
+			<Router>
+				<div className="App">
+					<header className="App-header">
+						<div>{/*
+							<Link to='/home'>
+								<button>home</button>
+							</Link>
+							<Link to='/about'>
+								<button>about</button>
+							</Link>
+							<Link to='/login'>
+								<button>login</button>
+							</Link> */}
+						</div>
+					</header>
+					<h1>user is {this.state.user ? this.state.user.username : 'null'}</h1>
+					<div>
+						<Route exact path='/' component={Home} />
+						<Route exact path='/login' render={() => <Greeter login={this.login}/>} />
+					</div>
+				</div>
+			</Router>
+		);
+	}
 }
 
 export default App;
